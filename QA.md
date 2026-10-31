@@ -43,3 +43,17 @@ Known validation limits: collision/grip edge cases are covered by the simulation
 ### Rebuilt final smoke
 
 **Passed** on the final rebuilt production preview: Time Trial completed at 26.36 simulated seconds; every browser assertion passed, no console/page errors, running audio context, pause/recovery/camera inputs, and best-lap storage survived reload. This final run used the corrected result comparator and scrollable-dialog build. Comparator edge ordering is explicitly covered by the unit suite; a single-rider Time Trial does not independently exercise multi-finisher ordering. Final screenshot inspected at 1280×800.
+
+## Formula rebuild validation
+
+Production build and revised simulation/world suites pass. Physics checks cover
+stationary steering, directional steering, unassisted heading, grip-limited
+understeer, barrier deflection, braking, manual gear holding, 60/120 Hz agreement,
+checkpoint enforcement and complete three-lap runs on all three expanded tracks.
+The formula browser smoke uses real keyboard/button input at a controlled 10 Hz
+render cadence to accommodate software rendering. It checks model loading, all
+five livery selections, acceleration/braking/steering, pause/resume, camera
+switching, mobile overflow, and zero browser console/page errors. Screenshots
+and measurements are in artifacts/formula-*. This is not an FPS benchmark or a
+claim of full tire/suspension simulation. Full browser career-race completion
+from the earlier motorcycle build does not validate this Formula rebuild.

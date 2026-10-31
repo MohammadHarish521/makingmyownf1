@@ -1,30 +1,48 @@
+/** Arcade open-wheel dynamics in track coordinates. SI units throughout. */
 export const BIKES = [
- {name:'Heritage 800',type:'PARALLEL TWIN · 800 CC',power:56,mass:224,top:55,grip:1.05,lean:0.72,price:0,redline:8000,color:'#d6a86c'},
- {name:'Roadster 650',type:'STREET TWIN · 650 CC',power:72,mass:188,top:61,grip:1.18,lean:1.05,price:1800,redline:10000,color:'#65c8bb'},
- {name:'Cafe Racer 900',type:'PERFORMANCE TWIN · 900 CC',power:94,mass:201,top:67,grip:1.22,lean:0.9,price:3200,redline:10500,color:'#b25040'},
- {name:'Superbike 1000',type:'INLINE FOUR · 1000 CC',power:156,mass:196,top:83,grip:1.4,lean:1.12,price:5500,redline:14000,color:'#d4e0ef'},
- {name:'Track Prototype',type:'RACE V4 · 1100 CC',power:195,mass:174,top:92,grip:1.6,lean:1.25,price:9000,redline:15500,color:'#e6fa7a'}
+ {name:'Scuderia Rosso',type:'FORMULA / V6 HYBRID',power:950,mass:798,top:94,grip:1.65,lean:1,price:0,redline:15000,color:'#e10600'},
+ {name:'Silver Arrow',type:'FORMULA / HIGH DOWNFORCE',power:970,mass:800,top:95,grip:1.75,lean:1,price:0,redline:15000,color:'#27f4d2'},
+ {name:'Papaya Racing',type:'FORMULA / BALANCED AERO',power:960,mass:798,top:95,grip:1.72,lean:1,price:0,redline:15000,color:'#ff8700'},
+ {name:'Midnight Bull',type:'FORMULA / LOW DRAG',power:990,mass:798,top:98,grip:1.68,lean:1,price:0,redline:15000,color:'#3671c6'},
+ {name:'Emerald Works',type:'FORMULA / MECHANICAL GRIP',power:945,mass:800,top:94,grip:1.8,lean:1,price:0,redline:15000,color:'#229971'}
 ];
 export type Controls={throttle:number;brake:number;steer:number};
-export type Rider={distance:number;lateral:number;speed:number;lean:number;rpm:number;gear:number;crash:number;lap:number;lapTime:number;best:number;checkpoint:number;finished:boolean;finishTime:number};
-export function newRider(distance=0,lateral=0):Rider{return {distance,lateral,speed:0,lean:0,rpm:1200,gear:1,crash:0,lap:0,lapTime:0,best:Infinity,checkpoint:0,finished:false,finishTime:0}}
-export function stepRider(r:Rider,input:Controls,bikeIndex:number,curvature:number,width:number,dt:number,upgrade=0,assist=true,manual=false){
- const b=BIKES[bikeIndex];if(r.finished)return;r.lapTime+=dt;if(r.crash>0){r.crash=Math.max(0,r.crash-dt);r.speed*=Math.exp(-dt*3);r.lean*=Math.exp(-dt*4);return}
- const ratio=[0,12,8.7,6.8,5.5,4.7,4.1][r.gear]*(1+bikeIndex*.055);const wheelRpm=r.speed/2.05*60;const target=Math.max(1200,wheelRpm*ratio);r.rpm+=(target-r.rpm)*Math.min(1,dt*12);
- if(!manual){if(r.rpm>b.redline*.86&&r.gear<6){r.gear++;r.rpm*=.75}if(r.rpm<3000&&r.gear>1)r.gear--}
- const band=Math.max(.35,Math.sin(Math.min(1,r.rpm/b.redline)*Math.PI*.78));const traction=Math.abs(r.lateral)>width/2 ? .48:1;
- const drive=input.throttle*(b.power*650/(b.mass+75))*band*(1+upgrade*.07)/Math.max(5,r.speed);
- r.speed=Math.max(0,Math.min(b.top*(1+upgrade*.025),r.speed+(drive-input.brake*12.5-.35-r.speed*r.speed*.00065-(input.throttle<.1?1.3:0)-(traction<1?5:0))*dt));
- // Countersteering response is filtered; road-following assist supplies the baseline lean.
- const baseline=Math.atan(curvature*r.speed*r.speed/9.81);const desired=Math.max(-1.05,Math.min(1.05,(assist?baseline*.7:0)+input.steer*.8));r.lean+=(desired-r.lean)*Math.min(1,dt*(3+b.lean*3));
- const grip=b.grip*traction;const lateralForce=curvature*r.speed*r.speed;
- const drift=Math.max(0,Math.abs(lateralForce)-9.81*grip)*(curvature>0?-1:1)*.07;
- r.lateral+=(input.steer*(1.8+r.speed*.10)*b.lean+drift)*dt;
- if(Math.abs(r.lateral)>width/2+2.1){r.crash=1.1;r.speed*=.35;r.lateral=Math.sign(r.lateral)*(width/2+1.8)}
- r.distance+=r.speed*dt;
+export type Rider={distance:number;lateral:number;speed:number;lean:number;heading:number;yawRate:number;steering:number;rpm:number;gear:number;crash:number;lap:number;lapTime:number;best:number;checkpoint:number;finished:boolean;finishTime:number};
+export function newRider(distance=0,lateral=0):Rider{return {distance,lateral,speed:0,lean:0,heading:0,yawRate:0,steering:0,rpm:4000,gear:1,crash:0,lap:0,lapTime:0,best:Infinity,checkpoint:0,finished:false,finishTime:0}}
+const clamp=(v:number,a:number,b:number)=>Math.max(a,Math.min(b,v));
+export function stepRider(r:Rider,input:Controls,carIndex:number,curvature:number,width:number,dt:number,upgrade=0,assist=true,manual=false){
+ if(r.finished||!Number.isFinite(dt)||dt<=0)return;
+ // Substep callers with a large delta as well as the normal 120 Hz loop.
+ if(dt>1/60){const count=Math.ceil(dt*120);for(let i=0;i<count;i++)stepRider(r,input,carIndex,curvature,width,dt/count,upgrade,assist,manual);return}
+ const car=BIKES[carIndex];r.lapTime+=dt;r.crash=Math.max(0,r.crash-dt);
+ const throttle=clamp(input.throttle,0,1),brake=clamp(input.brake,0,1),steer=clamp(input.steer,-1,1);
+ const off=Math.abs(r.lateral)>width/2-.8;
+ const grip=car.grip*9.81*(off?.42:1)*(1+Math.min(.7,r.speed*r.speed*.00011));
+ const drive=Math.min(13.8,car.power*745.7*.79/(car.mass*Math.max(16,r.speed)))*(1+upgrade*.025);
+ const drag=.35+r.speed*r.speed*.00132+(off?5.5:0);
+ r.speed=clamp(r.speed+(throttle*drive-brake*Math.min(28,grip*1.1)-drag)*dt,0,car.top);
+ // Steering lock falls with speed; actual yaw is limited by available tire force.
+ const lock=.42/(1+r.speed*.065);
+ r.steering+=(steer*lock-r.steering)*(1-Math.exp(-dt*9));
+ const baseline=assist?curvature*r.speed/Math.max(.65,1-curvature*r.lateral):0;
+ const desiredYaw=baseline+Math.tan(r.steering)*r.speed/3.55;
+ const maxYaw=grip/Math.max(3,r.speed);
+ const actual=clamp(desiredYaw,-maxYaw,maxYaw);
+ r.yawRate+=(actual-r.yawRate)*(1-Math.exp(-dt*12));
+ const forward=r.speed*Math.cos(r.heading)/Math.max(.65,1-curvature*r.lateral);
+ r.heading=clamp(r.heading+(r.yawRate-curvature*forward-(assist?r.heading*1.7:0))*dt,-1.2,1.2);
+ r.lateral+=r.speed*Math.sin(r.heading)*dt;
+ r.distance+=Math.max(0,forward)*dt;
+ r.lean=-r.yawRate*r.speed*.0008;
+ // Glancing wall contact sheds speed and deflects heading; no frozen crash timer.
+ const wall=width/2+1.55;
+ if(Math.abs(r.lateral)>wall){const side=Math.sign(r.lateral);r.lateral=side*wall;r.speed*=.78;r.heading=-side*.09;r.yawRate=0;r.crash=.35}
+ if(!manual)r.gear=clamp(Math.floor(r.speed/12)+1,1,8);
+ const ratios=[0,27,20,16,13.3,11.3,9.9,8.8,7.9];
+ r.rpm+=(clamp(4000+r.speed*ratios[r.gear]*13,4000,car.redline)-r.rpm)*(1-Math.exp(-dt*14));
 }
 export function updateLap(r:Rider,length:number,laps:number,time:number){const checkpoint=Math.floor(Math.max(0,r.distance)/length*16);if(checkpoint>r.checkpoint+1)return false;r.checkpoint=Math.max(r.checkpoint,checkpoint);const lap=Math.floor(Math.max(0,r.distance)/length);if(lap>r.lap){r.best=Math.min(r.best,r.lapTime);r.lapTime=0;r.lap=lap;if(lap>=laps){r.finished=true;r.finishTime=time}return true}return false}
-export function recover(r:Rider){r.lateral=0;r.speed=Math.min(r.speed,8);r.crash=0;r.lean=0}
+export function recover(r:Rider){r.lateral=0;r.speed=Math.min(r.speed,8);r.crash=0;r.lean=0;r.heading=0;r.yawRate=0;r.steering=0}
 export function seeded(seed:number){return ()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296}}
 export type Save={version:1;credits:number;owned:number[];upgrades:number[];records:Record<string,number>;wins:number};
 export const freshSave=():Save=>({version:1,credits:0,owned:[0],upgrades:[0,0,0,0,0],records:{},wins:0});

@@ -1,0 +1,96 @@
+{
+  "errors": [],
+  "accelerated": {
+    "screen": "race",
+    "elapsed": 4.49166666666668,
+    "countdown": -0.008333333333325177,
+    "selected": 0,
+    "trackIndex": 2,
+    "riders": [
+      {
+        "distance": 104.70905229655862,
+        "lateral": -2.1107736068832024,
+        "speed": 49.23653407097065,
+        "lean": 0.0036265022199206804,
+        "heading": -0.0038881309628127376,
+        "yawRate": -0.09206837687573008,
+        "steering": 0,
+        "rpm": 11343.873538339065,
+        "gear": 5,
+        "crash": 0,
+        "lap": 0,
+        "lapTime": 4.49166666666668,
+        "best": null,
+        "checkpoint": 1,
+        "finished": false,
+        "finishTime": 0
+      }
+    ],
+    "credits": 0,
+    "frameMs": 85.21838809374398,
+    "qualityReduced": false,
+    "audioActive": true
+  },
+  "braked": {
+    "screen": "race",
+    "elapsed": 5.691666666666739,
+    "countdown": -0.008333333333325177,
+    "selected": 0,
+    "trackIndex": 2,
+    "riders": [
+      {
+        "distance": 146.88744437345423,
+        "lateral": -2.26866869488543,
+        "speed": 22.325702354240033,
+        "lean": 0.0002507895051063281,
+        "heading": -0.0025911183240062137,
+        "yawRate": -0.014041523818997504,
+        "steering": 0,
+        "rpm": 9787.410027519856,
+        "gear": 2,
+        "crash": 0,
+        "lap": 0,
+        "lapTime": 5.691666666666739,
+        "best": null,
+        "checkpoint": 1,
+        "finished": false,
+        "finishTime": 0
+      }
+    ],
+    "credits": 0,
+    "frameMs": 88.40062193340346,
+    "qualityReduced": true,
+    "audioActive": true
+  },
+  "steered": {
+    "screen": "race",
+    "elapsed": 6.091666666666759,
+    "countdown": -0.008333333333325177,
+    "selected": 0,
+    "trackIndex": 2,
+    "riders": [
+      {
+        "distance": 155.71378356868394,
+        "lateral": -1.6870417147292966,
+        "speed": 21.92711926624804,
+        "lean": -0.013355089236572807,
+        "heading": 0.16472868536633703,
+        "yawRate": 0.7613340057584546,
+        "steering": 0.16801929316726133,
+        "rpm": 9718.238150011435,
+        "gear": 2,
+        "crash": 0,
+        "lap": 0,
+        "lapTime": 6.091666666666759,
+        "best": null,
+        "checkpoint": 1,
+        "finished": false,
+        "finishTime": 0
+      }
+    ],
+    "credits": 0,
+    "frameMs": 89.30110299556898,
+    "qualityReduced": true,
+    "audioActive": true
+  }
+}

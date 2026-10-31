@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 
 export const TRACKS = [
-  { name: 'Alpine Pass', subtitle: 'Morning mist · Mountain ribbon · Dry tarmac' },
+  { name: 'Alpine Pass', subtitle: 'Mountain circuit · Dry tarmac' },
   { name: 'Neon Harbor', subtitle: 'Midnight run · Coastal skyline · Wet tarmac' },
-  { name: 'Grand Circuit', subtitle: 'Golden hour · Grandstands · Racing asphalt' },
+  { name: 'Grand Circuit', subtitle: 'Grandstands · High speed · Dry tarmac' },
 ];
 
 export interface TrackWorld {
@@ -31,12 +31,12 @@ export function buildTrack(index: number): TrackWorld {
     [[-70,-65],[12,-82],[88,-62],[110,-3],[82,55],[14,88],[-42,67],[-95,85],[-118,9]],
     [[-90,-55],[-25,-77],[64,-72],[109,-38],[87,10],[30,6],[24,56],[-34,88],[-99,54],[-73,9]],
   ];
-  const curve = new THREE.CatmullRomCurve3(routes[index].map(([x,z])=>new THREE.Vector3(x,0,z)),true,'centripetal');
+  const curve = new THREE.CatmullRomCurve3(routes[index].map(([x,z])=>new THREE.Vector3(x*2.4,0,z*2.4)),true,'centripetal');
   curve.arcLengthDivisions = 1600; curve.updateArcLengths();
   const length = curve.getLength(), width = 12, segments = 640;
   const roadMat = material(index===1 ? '#172530' : '#323c43', index===1 ? .26 : .93, index===1 ? .35 : .02);
   const shoulderMat = material(index===0 ? '#80816d' : '#59616a');
-  const white = material('#e1ded1'), red = material(index===1?'#23d9de':'#c94f3d');
+  const white = material('#e1ded1'), red = material(index===1?'#23d9de':'#e10600');
   function ribbon(inner: number, outer: number, mat: THREE.Material, y = .014) {
     const positions: number[] = [], uv: number[] = [], indices: number[] = [];
     for(let i=0;i<=segments;i++) {

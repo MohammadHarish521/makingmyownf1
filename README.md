@@ -1,3 +1,7 @@
+# Throttle Formula
+
+The current game is an open-wheel Formula racer. See [REBUILD-NOTES.md](REBUILD-NOTES.md) for physics, reference research, model provenance, and changes from the original motorcycle prototype. Earlier documentation below describes that prototype.
+
 # THROTTLE THEORY
 
 An original, playable 3D motorcycle racing game built with TypeScript, Vite, Three.js and Web Audio. All motorcycles, scenery and sound are generated in code; runtime assets require no external downloads or API keys.

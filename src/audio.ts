@@ -1,4 +1,4 @@
-/** Original procedural motorcycle audio. No sampled recordings or network assets. */
+/** Synthesized open-wheel engine audio. No sampled recordings or network assets. */
 export class EngineAudio {
   private context: AudioContext | null = null;
   private master: GainNode | null = null;
@@ -160,10 +160,10 @@ export class EngineAudio {
 
   private static readonly ratios = [1, 0.5, 2];
   private static readonly profiles = [
-    { orders: 1, uneven: 0.009, detune: -13, darkness: 180, brightness: 0.055, levels: [0.42, 0.30, 0.06] },
-    { orders: 1, uneven: 0.004, detune: 7, darkness: 330, brightness: 0.09, levels: [0.36, 0.15, 0.14] },
-    { orders: 1, uneven: 0.007, detune: -9, darkness: 300, brightness: 0.105, levels: [0.38, 0.23, 0.17] },
-    { orders: 2, uneven: 0.001, detune: 3, darkness: 500, brightness: 0.14, levels: [0.28, 0.08, 0.21] },
-    { orders: 2, uneven: 0.002, detune: 5, darkness: 650, brightness: 0.165, levels: [0.31, 0.09, 0.24] },
+    { orders: 3, uneven: 0.009, detune: -13, darkness: 180, brightness: 0.055, levels: [0.42, 0.30, 0.06] },
+    { orders: 3, uneven: 0.004, detune: 7, darkness: 330, brightness: 0.09, levels: [0.36, 0.15, 0.14] },
+    { orders: 3, uneven: 0.007, detune: -9, darkness: 300, brightness: 0.105, levels: [0.38, 0.23, 0.17] },
+    { orders: 3, uneven: 0.001, detune: 3, darkness: 500, brightness: 0.14, levels: [0.28, 0.08, 0.21] },
+    { orders: 3, uneven: 0.002, detune: 5, darkness: 650, brightness: 0.165, levels: [0.31, 0.09, 0.24] },
   ];
 }
