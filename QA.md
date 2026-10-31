@@ -100,3 +100,14 @@ A separate unmodified requestAnimationFrame measurement at 960x600 in Performanc
 mode recorded about 1.3 FPS using Chromium SwiftShader software rendering here.
 See artifacts/render-benchmark.json. This environment cannot establish a 60 FPS
 hardware-GPU guarantee; testing on target devices remains necessary.
+
+## Controller handedness correction
+
+Human steering now converts standard gamepad/keyboard/touch right to negative
+Cannon yaw for the model's +Z-forward convention. The regression asserts the
+physical car's projected position through a chase camera, rather than treating
+an internal yaw sign as proof of screen-right movement. Checks cover both stick
+directions, deadzone, non-finite axis input, keyboard/touch priority, neutral
+release and a connected controller after an empty slot. Browser verification uses
+a synthetic standard Gamepad API plus normal keyboard and touch-button input;
+physical hardware testing remains device-specific.

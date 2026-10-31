@@ -1,0 +1,49 @@
+{
+  "errors": [],
+  "checks": [
+    "standard joystick right and left",
+    "controller in second slot",
+    "keyboard priority",
+    "right touch control",
+    "release returns to center",
+    "steering HUD direction",
+    "throttle HUD uses connected controller"
+  ],
+  "right": {
+    "distance": 15.192936328474968,
+    "lateral": 0.2936820478564378,
+    "speed": 19.430863756917045,
+    "lean": 0,
+    "heading": 0.20975463214995732,
+    "yawRate": -0.5947828246203324,
+    "steering": -0.2999796867571484,
+    "rpm": 9151.93815613001,
+    "gear": 2,
+    "crash": 0,
+    "lap": 0,
+    "lapTime": 1.4999999999999996,
+    "best": null,
+    "checkpoint": 0,
+    "finished": false,
+    "finishTime": 0
+  },
+  "left": {
+    "distance": 25.54093743555401,
+    "lateral": 3.9835291967282394,
+    "speed": 25.324358700425773,
+    "lean": 0,
+    "heading": 0.4945040486039223,
+    "yawRate": 0.5001790655213815,
+    "steering": 0.27244472860736896,
+    "rpm": 6933.407738002864,
+    "gear": 3,
+    "crash": 0,
+    "lap": 0,
+    "lapTime": 1.9999999999999978,
+    "best": null,
+    "checkpoint": 0,
+    "finished": false,
+    "finishTime": 0
+  },
+  "method": "Synthetic standard Gamepad API with real keyboard/touch-button input and real Cannon simulation; hardware controller testing still requires the user device."
+}
