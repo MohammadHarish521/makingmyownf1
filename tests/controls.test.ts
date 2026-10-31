@@ -17,9 +17,9 @@ test('simultaneous bumpers are neutral and disconnected controllers cannot shift
  for(const index of [4,5])Object.assign(controller.buttons[index],{pressed:true,value:1});
  assert.equal(shifter.sample([controller]),0);
  Object.assign(controller.buttons[5],{pressed:false,value:0});assert.equal(shifter.sample([controller]),0);
- assert.equal(shifter.sample([]),0);controller.connected=false;
+ assert.equal(shifter.sample([]),0);Object.assign(controller,{connected:false});
  assert.equal(shifter.sample([controller]),0);
- controller.connected=true;assert.equal(shifter.sample([controller]),-1);
+ Object.assign(controller,{connected:true});assert.equal(shifter.sample([controller]),-1);
 });
 test('joystick, keyboard and touch share the same corrected steering direction',()=>{const empty=new Set<string>();const right=readDrivingControls(empty,[pad(1)]),left=readDrivingControls(empty,[pad(-1)]);assert.equal(right.steer,-1);assert.equal(left.steer,1);for(const key of ['KeyD','ArrowRight'])assert.equal(readDrivingControls(new Set([key]),[]).steer,right.steer);for(const key of ['KeyA','ArrowLeft'])assert.equal(readDrivingControls(new Set([key]),[]).steer,left.steer)});
 test('neutral stick stays centered; active keyboard/touch wins over stick drift',()=>{assert.equal(readDrivingControls(new Set(),[pad(.09)]).steer,0);assert.equal(readDrivingControls(new Set(),[pad(NaN)]).steer,0);assert.equal(readDrivingControls(new Set(['ArrowRight']),[pad(-.4)]).steer,-1);assert.equal(readDrivingControls(new Set(['KeyA','KeyD']),[pad(1)]).steer,0)});

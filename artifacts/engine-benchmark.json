@@ -1,0 +1,81 @@
+{
+  "measuredAt": "2026-10-31T18:36:11.963Z",
+  "runtime": "v26.5.0",
+  "cpu": "Intel(R) Core(TM) i5-10300H CPU @ 2.50GHz",
+  "platform": "win32",
+  "note": "Headless CPU-only vehicle/AI benchmark, 2s warmup + 6s sample per case. No WebGL/GPU or 1080p FPS claim.",
+  "rows": [
+    {
+      "hz": 60,
+      "cars": 1,
+      "meanStepMs": 0.36079361111111313,
+      "p95StepMs": 0.7051999999999907,
+      "p99StepMs": 1.5598999999999705,
+      "simulatedS": 8,
+      "finite": true
+    },
+    {
+      "hz": 60,
+      "cars": 4,
+      "meanStepMs": 1.4388608333333281,
+      "p95StepMs": 2.56230000000005,
+      "p99StepMs": 4.9521000000002005,
+      "simulatedS": 8,
+      "finite": true
+    },
+    {
+      "hz": 60,
+      "cars": 6,
+      "meanStepMs": 1.6311836111111113,
+      "p95StepMs": 2.660799999999881,
+      "p99StepMs": 3.7752000000000407,
+      "simulatedS": 8,
+      "finite": true
+    },
+    {
+      "hz": 60,
+      "cars": 10,
+      "meanStepMs": 1.4964319444444414,
+      "p95StepMs": 2.561999999999898,
+      "p99StepMs": 3.950800000000072,
+      "simulatedS": 8,
+      "finite": true
+    },
+    {
+      "hz": 120,
+      "cars": 1,
+      "meanStepMs": 0.42460166666667004,
+      "p95StepMs": 0.8876000000000204,
+      "p99StepMs": 1.5617000000002008,
+      "simulatedS": 8,
+      "finite": true
+    },
+    {
+      "hz": 120,
+      "cars": 4,
+      "meanStepMs": 0.9797759722222211,
+      "p95StepMs": 1.8985999999999876,
+      "p99StepMs": 3.3504000000002634,
+      "simulatedS": 8,
+      "finite": true
+    },
+    {
+      "hz": 120,
+      "cars": 6,
+      "meanStepMs": 1.1116872222222531,
+      "p95StepMs": 2.1648000000004686,
+      "p99StepMs": 3.079099999999926,
+      "simulatedS": 8,
+      "finite": true
+    },
+    {
+      "hz": 120,
+      "cars": 10,
+      "meanStepMs": 1.2947879166666945,
+      "p95StepMs": 2.2286999999996624,
+      "p99StepMs": 2.6067999999995664,
+      "simulatedS": 8,
+      "finite": true
+    }
+  ]
+}

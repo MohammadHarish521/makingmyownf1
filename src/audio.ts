@@ -14,7 +14,8 @@ export class EngineAudio {
   private intakeGain: GainNode | null = null;
   private shiftGain: GainNode | null = null;
   private sources: AudioScheduledSourceNode[] = [];
-  private volume = 0.55;
+  // Silent until the player explicitly enables sound.
+  private volume = 0;
   private engineVolume = 0.8;
   private windVolume = 0.45;
   private lastGear = 1;

@@ -1,5 +1,11 @@
 # THROTTLE THEORY — architecture and integration contract
 
+> Historical architecture below. The current Formula simulation contract is
+> [docs/ENGINE_CONTRACT.md](docs/ENGINE_CONTRACT.md); engineering priorities and
+> checkout/framework findings are in [docs/ENGINE_PLAN.md](docs/ENGINE_PLAN.md).
+> Do not use the motorcycle controller or timestep descriptions below for new
+> production integration.
+
 ## Scope and stack
 
 This project replaces the earlier 2D car prototype with an original browser motorcycle game. TypeScript, Vite, Three.js, and the Web Audio API form the minimum stack. WebGL2 is the baseline renderer. WebGPU, React, downloaded motorcycle assets, and an external rigid-body engine are not prerequisites for the initial playable build.

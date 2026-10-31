@@ -13,6 +13,8 @@ export class VehiclePhysics {
  private previous:{position:CANNON.Vec3;quaternion:CANNON.Quaternion}[]=[];
  private forward=new CANNON.Vec3();
  private force=new CANNON.Vec3();
+ private appliedInputs:Controls[]=[];
+ private recovered:boolean[]=[];
  constructor(readonly track:TrackWorld,readonly riders:Rider[],readonly carIndices:number[],readonly wet=false){
   this.world.broadphase=new CANNON.SAPBroadphase(this.world);(this.world.solver as CANNON.GSSolver).iterations=8;
   this.world.defaultContactMaterial.friction=.15;this.world.defaultContactMaterial.restitution=.04;
@@ -42,7 +44,9 @@ export class VehiclePhysics {
   this.wrapped[index]=u*this.track.length;this.closest[index]=Math.floor(u*1024);this.previous[index].position.copy(body.position);this.previous[index].quaternion.copy(body.quaternion);
   for(let w=0;w<4;w++)vehicle.updateWheelTransform(w);
  }
- recover(index:number){const r=this.riders[index];this.place(index,r.distance,0,Math.min(r.speed,8))}
+ recover(index:number){const r=this.riders[index];this.place(index,r.distance,0,Math.min(r.speed,8));this.recovered[index]=true}
+ consumeRecovery(index:number){const recovered=!!this.recovered[index];this.recovered[index]=false;return recovered}
+ input(index:number):Controls{return {...(this.appliedInputs[index]??{throttle:0,brake:0,steer:0})}}
  control(index:number,input:Controls,dt:number,upgrade=0,assist=true,manual=false){
   const vehicle=this.vehicles[index],body=vehicle.chassisBody,r=this.riders[index],car=BIKES[this.carIndices[index]];
   body.vectorToWorldFrame(new CANNON.Vec3(0,0,1),this.forward);const speed=body.velocity.dot(this.forward),magnitude=body.velocity.length();
@@ -55,6 +59,7 @@ export class VehiclePhysics {
   for(let w=0;w<2;w++)vehicle.setSteeringValue(r.steering,w);
   if(!manual)r.gear=clamp(Math.floor(Math.abs(speed)/12)+1,1,8);
   const throttle=r.finished?0:clamp(input.throttle,0,1),brake=r.finished?1:clamp(input.brake,0,1);
+  this.appliedInputs[index]={throttle,brake,steer:clamp(input.steer,-1,1)};
   let drive=Math.min(11000,car.power*745.7*.78/Math.max(16,Math.abs(speed)))*(1+upgrade*.025)*throttle;
   if(speed>car.top||manual&&speed>r.gear*12+16)drive=0;
   if(assist&&vehicle.wheelInfos.slice(2).some(w=>w.skidInfo<.65))drive*=.65;
@@ -99,7 +104,7 @@ export class VehiclePhysics {
    r.distance+=progress;this.wrapped[index]=wrapped;
    const t=this.track.curve.getTangentAt(wrapped/this.track.length);r.lateral=(body.position.x-bestX)*t.z-(body.position.z-bestZ)*t.x;
    body.vectorToWorldFrame(new CANNON.Vec3(0,0,1),this.forward);r.heading=Math.atan2(t.z*this.forward.x-t.x*this.forward.z,t.x*this.forward.x+t.z*this.forward.z);
-   r.speed=Math.max(0,body.velocity.dot(this.forward));r.yawRate=body.angularVelocity.y;r.crash=Math.max(0,r.crash-dt);if(!r.finished)r.lapTime+=dt;
+   r.speed=Math.max(0,body.velocity.dot(this.forward));r.yawRate=body.angularVelocity.y;r.crash=Math.max(0,r.crash-dt);
    r.rpm+=(clamp(4500+(r.speed-(r.gear-1)*12)*710,4500,15000)-r.rpm)*(1-Math.exp(-dt*12));
    if(!r.finished&&(body.position.y<-.5||Math.abs(r.lateral)>35))this.recover(index);
    for(let w=0;w<4;w++)vehicle.updateWheelTransform(w);
@@ -110,4 +115,5 @@ export class VehiclePhysics {
   const body=this.vehicles[index].chassisBody,prev=this.previous[index];const position=new CANNON.Vec3(),quaternion=new CANNON.Quaternion();prev.position.lerp(body.position,alpha,position);prev.quaternion.slerp(body.quaternion,alpha,quaternion);
   return {position,quaternion};
  }
+ dispose(){for(const vehicle of this.vehicles)vehicle.removeFromWorld(this.world);for(const body of [...this.world.bodies])this.world.removeBody(body)}
 }

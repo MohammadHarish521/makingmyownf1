@@ -27,7 +27,7 @@ const garage=new THREE.Group();scene.add(garage);decorateGarage(garage);
 let menuView='main';let physics:VehiclePhysics|null=null;
 let session:RaceSession|null=null;
 const race={get elapsed(){return session?.elapsedS??0},get countdown(){return session?.countdownS??3}};
-let selected=0,trackIndex=2,mode='Quick race',difficulty=1,assist=true,manual=false,save=readSave(),screen='home',cameraMode=0,engineOn=false,rev=false,muted=false,volume=.65,engineVolume=.85,windVolume=.35,world:ReturnType<typeof buildTrack>|null=null,bike=createBike(0),racers:Rider[]=[],meshes:THREE.Group[]=[],last=0,orbit=.55,garageZoom=10.7,drag=false,dragX=0,toast='',toastTime=0,finishAwarded=false;
+let selected=0,trackIndex=2,mode='Quick race',difficulty=1,assist=true,manual=false,save=readSave(),screen='home',cameraMode=0,engineOn=false,rev=false,muted=true,volume=.65,engineVolume=.85,windVolume=.35,world:ReturnType<typeof buildTrack>|null=null,bike=createBike(0),racers:Rider[]=[],meshes:THREE.Group[]=[],last=0,orbit=.55,garageZoom=10.7,drag=false,dragX=0,toast='',toastTime=0,finishAwarded=false;
 garage.add(bike);const audio=new EngineAudio();const keys=new Set<string>();const gearShifter=new GamepadGearShifter();const look=new THREE.Vector3(),target=new THREE.Vector3(),camGoal=new THREE.Vector3();let frameMs=16,qualityReduced=false;
 function notify(s:string){toast=s;toastTime=4;let e=app.querySelector('.notice');if(!e){e=document.createElement('div');e.className='notice';app.append(e)}e.textContent=s}
 function persist(){if(!writeSave(save))notify('Save unavailable — progress stays in this session.')}

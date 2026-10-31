@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": { "types": ["node"] },
+  "include": ["src", "tests/*.test.ts", "tests/engine-browser.spec.ts", "playwright.config.ts", "scripts/benchmark-engine.ts"]
+}
