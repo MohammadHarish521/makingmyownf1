@@ -1,0 +1,149 @@
+{
+  "errors": [],
+  "audioStarted": true,
+  "bikeSelected": 1,
+  "accelerated": {
+    "screen": "race",
+    "elapsed": 7.491666666666829,
+    "countdown": -0.008333333333325177,
+    "selected": 0,
+    "trackIndex": 0,
+    "riders": [
+      {
+        "distance": 156.58589569387965,
+        "lateral": -1.0543354542649381,
+        "speed": 34.717942713175525,
+        "lean": -0.4487274603859185,
+        "rpm": 6877.898206078429,
+        "gear": 3,
+        "crash": 0,
+        "lap": 0,
+        "lapTime": 7.491666666666829,
+        "best": null,
+        "checkpoint": 3,
+        "finished": false,
+        "finishTime": 0
+      }
+    ],
+    "credits": 0,
+    "frameMs": 91.75736465232383,
+    "qualityReduced": true,
+    "audioActive": true
+  },
+  "braked": {
+    "screen": "race",
+    "elapsed": 8.491666666666825,
+    "countdown": -0.008333333333325177,
+    "selected": 0,
+    "trackIndex": 0,
+    "riders": [
+      {
+        "distance": 183.87428401505258,
+        "lateral": -1.0543354542649381,
+        "speed": 20.067955256748895,
+        "lean": -0.4747193434269013,
+        "rpm": 3424.2231003416928,
+        "gear": 4,
+        "crash": 0,
+        "lap": 0,
+        "lapTime": 8.491666666666825,
+        "best": null,
+        "checkpoint": 4,
+        "finished": false,
+        "finishTime": 0
+      }
+    ],
+    "credits": 0,
+    "frameMs": 93.26516680032373,
+    "qualityReduced": true,
+    "audioActive": true
+  },
+  "steered": {
+    "screen": "race",
+    "elapsed": 8.991666666666797,
+    "countdown": -0.008333333333325177,
+    "selected": 0,
+    "trackIndex": 0,
+    "riders": [
+      {
+        "distance": 193.66633081879166,
+        "lateral": 0.32914934386055905,
+        "speed": 19.11807977982873,
+        "lean": 0.14348163741569425,
+        "rpm": 3103.2206749818183,
+        "gear": 4,
+        "crash": 0,
+        "lap": 0,
+        "lapTime": 8.991666666666797,
+        "best": null,
+        "checkpoint": 4,
+        "finished": false,
+        "finishTime": 0
+      }
+    ],
+    "credits": 0,
+    "frameMs": 93.91224420783352,
+    "qualityReduced": true,
+    "audioActive": true
+  },
+  "paused": {
+    "screen": "paused",
+    "elapsed": 8.991666666666797,
+    "countdown": -0.008333333333325177,
+    "selected": 0,
+    "trackIndex": 0,
+    "riders": [
+      {
+        "distance": 193.66633081879166,
+        "lateral": 0,
+        "speed": 8,
+        "lean": 0,
+        "rpm": 3103.2206749818183,
+        "gear": 4,
+        "crash": 0,
+        "lap": 0,
+        "lapTime": 8.991666666666797,
+        "best": null,
+        "checkpoint": 4,
+        "finished": false,
+        "finishTime": 0
+      }
+    ],
+    "credits": 0,
+    "frameMs": 93.91224420783352,
+    "qualityReduced": true,
+    "audioActive": true
+  },
+  "final": {
+    "screen": "results",
+    "elapsed": 26.358333333332478,
+    "countdown": -0.008333333333325177,
+    "selected": 0,
+    "trackIndex": 0,
+    "riders": [
+      {
+        "distance": 691.8892834360114,
+        "lateral": 2.729851196808223,
+        "speed": 40.53953589483877,
+        "lean": 0.029756893160655988,
+        "rpm": 6507.898929365657,
+        "gear": 4,
+        "crash": 0,
+        "lap": 1,
+        "lapTime": 0,
+        "best": 26.358333333332478,
+        "checkpoint": 16,
+        "finished": true,
+        "finishTime": 26.358333333332478
+      }
+    ],
+    "credits": 0,
+    "frameMs": 99.83961976436582,
+    "qualityReduced": true,
+    "audioActive": true
+  },
+  "persistedCredits": 0,
+  "savedRecords": {
+    "0:0": 26.358333333332478
+  }
+}

@@ -1,0 +1,9 @@
+# THROTTLE THEORY audio
+
+`src/audio.ts` contains an original, asset-free Web Audio engine. All waveforms, noise and impulse responses are generated in code. No commercial engine recordings, copyrighted samples, or third-party audio assets are included.
+
+The synthesis combines three band-limited custom periodic combustion banks, low-frequency firing orders, a mechanical triangle layer, resonant filtered intake noise, speed-dependent wind, nonlinear exhaust saturation, a short diffuse reflection, and a master dynamics compressor. RPM drives firing frequency; throttle separately drives harmonic energy, intake and filter opening. Shift changes briefly cut combustion energy and trigger a short mechanical noise transient. Audio parameters use smoothing to avoid zipper noise. Twin and four-cylinder categories use distinct pulse orders, low-frequency weight, unevenness, detuning and filter profiles.
+
+A browser gesture must call `await audio.start()` before updates become audible. Pass RPM in revolutions per minute and speed in metres per second. Call `update(rpm, throttle, speed, gear, bikeIndex)` each simulation/render update. Bike indices follow Heritage, Roadster, Cafe Racer, Superbike and Prototype. Passing RPM below 100 releases the engine bus; speed still controls wind. `setVolume(master, engine, wind)` independently controls the mix. Call `dispose()` at application teardown.
+
+This is procedural simcade sound design, not a recording-level recreation of a particular real motorcycle. There are no positional opponent emitters or measured acoustic environments. The startup effect is a short gain rise into idle, not a recorded starter motor. Final listening checks remain necessary on headphones and speakers; a successful Web Audio initialization is not a subjective audio-quality measurement.
