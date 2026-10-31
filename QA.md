@@ -57,3 +57,16 @@ switching, mobile overflow, and zero browser console/page errors. Screenshots
 and measurements are in artifacts/formula-*. This is not an FPS benchmark or a
 claim of full tire/suspension simulation. Full browser career-race completion
 from the earlier motorcycle build does not validate this Formula rebuild.
+
+## Qvist visual upgrade
+
+Production build and unchanged physics/world suites pass. The source model is
+normalized from millimetres, with +Z forward. The new player and opponent meshes
+have separate detail levels; the 16 aerodynamic/body/wheel assemblies and four
+wheel pivots are retained. Browser screenshots are generated using Chromium
+software rendering, with explicitly advanced render frames to avoid continuous software rendering during UI checks; they do not measure
+hardware FPS. See artifacts/qvist-* for visual checks of garage, livery, race grid,
+cockpit and mobile layout. No new full-career browser run is claimed for this
+visual upgrade.
+
+Final visual smoke passed: garage, livery switching, six-car grid, cockpit camera, pause/garage return, mobile overflow and zero console/page errors. This check uses normal UI mouse/keyboard input and does not claim a completed race or target-device FPS.

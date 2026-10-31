@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {surfaces} from './surfaces';
 
 export const TRACKS = [
   { name: 'Alpine Pass', subtitle: 'Mountain circuit · Dry tarmac' },
@@ -35,6 +36,7 @@ export function buildTrack(index: number): TrackWorld {
   curve.arcLengthDivisions = 1600; curve.updateArcLengths();
   const length = curve.getLength(), width = 12, segments = 640;
   const roadMat = material(index===1 ? '#172530' : '#323c43', index===1 ? .26 : .93, index===1 ? .35 : .02);
+  if(surfaces.asphalt){roadMat.map=surfaces.asphalt;roadMat.color.set(index===1?'#626a78':'#a1a5ab');roadMat.bumpMap=surfaces.asphalt;roadMat.bumpScale=.015;}
   const shoulderMat = material(index===0 ? '#80816d' : '#59616a');
   const white = material('#e1ded1'), red = material(index===1?'#23d9de':'#e10600');
   function ribbon(inner: number, outer: number, mat: THREE.Material, y = .014) {
@@ -56,7 +58,8 @@ export function buildTrack(index: number): TrackWorld {
     const colors:number[]=[]; for(let i=0;i<=segments;i++){const c=new THREE.Color(Math.floor(i/5)%2?red.color:white.color);colors.push(c.r,c.g,c.b,c.r,c.g,c.b);}
     curb.geometry.setAttribute('color',new THREE.Float32BufferAttribute(colors,3));curb.material=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.7});
   }
-  const ground = mesh(new THREE.PlaneGeometry(1500,1500),material(index===0?'#496147':index===1?'#142b32':'#6b7653'),0,-.09,0,group);ground.rotation.x=-Math.PI/2;
+  const groundMat=material(index===1?'#283b35':'#a0b193');if(surfaces.grass)groundMat.map=surfaces.grass;
+  const ground = mesh(new THREE.PlaneGeometry(1500,1500),groundMat,0,-.09,0,group);ground.rotation.x=-Math.PI/2;
   const dummy = new THREE.Object3D();
   const nearestSamples=Array.from({length:200},(_,i)=>curve.getPointAt(i/200));
   const away=(x:number,z:number,d:number)=>nearestSamples.every(p=>(p.x-x)**2+(p.z-z)**2>d*d);

@@ -22,3 +22,19 @@ All five liveries are immediately selectable. Existing earned credits persist.
 Tracks are expanded to make the car scale and braking distances meaningful.
 AI looks ahead through several braking distances; a HUD brake cue warns of
 approaching corners. B rear view and eight-speed Q/E controls added.
+
+## Detailed Formula model upgrade
+
+The earlier generic model has been replaced by Qvist_designs' F1 2026 concept,
+distributed by filan214/F1---2026-Car-Details under CC BY 4.0. Source, author,
+license and changes are documented in public/models/qvist/ATTRIBUTION.md and
+linked from the garage. The prepared source has about 1.2 million triangles;
+Blender decimation creates a detailed player/showroom model and a lighter AI
+model. Axes, metre scale and independent steering/spin pivots are normalized at
+load time. Custom tyre lettering and race-number decals are added locally.
+
+Rendering now uses a PMREM studio environment, daylight sky environment,
+clear-coated paint, a tighter shadow camera, dark studio floor, textured tarmac
+and grass, and lower/closer chase cameras. The cockpit keeps the imported car
+visible instead of hiding the whole model. It is an independent concept model,
+not an official team's CAD asset or an asset from EA's F1 game.
