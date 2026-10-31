@@ -70,3 +70,13 @@ cockpit and mobile layout. No new full-career browser run is claimed for this
 visual upgrade.
 
 Final visual smoke passed: garage, livery switching, six-car grid, cockpit camera, pause/garage return, mobile overflow and zero console/page errors. This check uses normal UI mouse/keyboard input and does not claim a completed race or target-device FPS.
+
+## Grand Prix UI verification
+
+Production build and physics/world suites pass. Browser UI smoke verifies all
+six menu entries, Career circuit selection, garage livery selection, insufficient
+credit protection, retained driving settings, solo Time Trial/Practice grids,
+live throttle display, pause/resume, main-menu return and mobile overflow.
+Screenshots and structured results are in artifacts/ui-*. Normal mouse/keyboard
+input and explicit render frames accommodate software rendering; this is not a
+performance benchmark or a full-race completion test.

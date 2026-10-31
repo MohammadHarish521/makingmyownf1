@@ -1,0 +1,17 @@
+{
+  "errors": [],
+  "checks": [
+    "six main menu actions",
+    "career circuit selection",
+    "garage livery selection",
+    "insufficient credits safeguard",
+    "settings retained between screens",
+    "time trial solo grid",
+    "live throttle meter",
+    "pause and resume",
+    "return to main menu",
+    "mobile menu overflow",
+    "mobile practice start"
+  ],
+  "method": "Normal UI input with explicit render frames; no hardware FPS or full race completion claim."
+}
