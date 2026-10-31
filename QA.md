@@ -80,3 +80,23 @@ live throttle display, pause/resume, main-menu return and mobile overflow.
 Screenshots and structured results are in artifacts/ui-*. Normal mouse/keyboard
 input and explicit render frames accommodate software rendering; this is not a
 performance benchmark or a full-race completion test.
+
+## Engine and polish verification
+
+Production build and all test suites pass, including engine acceleration,
+braking, four suspension contacts, steering direction, off-road slowdown,
+manual gear retention, physical car contact, recovery, a complete Grand Circuit
+lap without recovery at the production 60 Hz step, and 60/120 Hz agreement.
+The six-car headless benchmark records roughly 1.1 ms mean CPU physics time per
+step in artifacts/physics-benchmark.json. This is not a rendered-FPS result.
+
+Browser checks cover font loading, corrected drag direction and release, wheel
+zoom, existing menu flows and settings, mountain scenery, actual engine motion,
+night skyline/headlights, and Performance mode. Screenshots/results are in
+artifacts/polish-*. The visual smoke advances render frames explicitly, so its
+clock cannot be used as an FPS benchmark.
+
+A separate unmodified requestAnimationFrame measurement at 960x600 in Performance
+mode recorded about 1.3 FPS using Chromium SwiftShader software rendering here.
+See artifacts/render-benchmark.json. This environment cannot establish a 60 FPS
+hardware-GPU guarantee; testing on target devices remains necessary.

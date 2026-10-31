@@ -54,3 +54,33 @@ Reference: https://www.crazygames.com/game/crazy-grand-prix
 HUD and menu layout reference screenshots:
 https://www.drifted.com/crazy-grand-prix/
 No reference-game images, logos or UI code are bundled.
+
+## Physics, controls, scenery and typography update
+
+Production driving now uses cannon-es RaycastVehicle and rigid bodies, replacing
+the old scalar track-coordinate movement. The engine owns four-wheel raycast
+suspension, tire friction, physical car/barrier contacts and braking impulses.
+The chassis has a low center of gravity, front brake bias, ABS, traction control,
+bounded yaw-stability torque, drag and speed-dependent aero load. Steering
+assist supplies road feedforward; AI uses lookahead steering and braking.
+Recovery preserves race progress. The fixed engine step is 60 Hz; rendering
+interpolates the two most recent physical poses. Wheels follow suspension travel.
+Older stepRider tests describe the retained prototype helper, not production
+vehicle dynamics; vehicle-physics.test.ts verifies the engine implementation.
+
+Auto graphics targets 60 FPS by adjusting pixel density and shadow resolution
+using measured frame time. High and Performance presets and an optional measured
+FPS counter are available in Settings. All race cars use the lighter imported
+model; the detailed model remains in the showroom. Nearby night lights are
+budgeted. This does not guarantee 60 FPS on every GPU or browser.
+
+The reversed garage drag is corrected. Pointer release/cancel ends orbiting,
+and the mouse wheel zooms within bounds. Alpine and Grand Circuit have layered
+terrain ridges outside the circuit envelope. Neon Harbor has a star field, moon,
+illuminated skyline, track lamps and player headlights. Routes remain flat;
+mountains are scenery rather than drivable elevation.
+
+UI fonts are now locally bundled Barlow and Rajdhani (SIL OFL). Charcoal surfaces,
+racing-red actions, larger labels, upright telemetry and clearer selected/focus
+states replace the old generic italic styling. Font licenses are in public/fonts;
+cannon-es's MIT license is in public/licenses.

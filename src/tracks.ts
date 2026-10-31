@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {addMountainBackdrop,addCityWindows} from './scenery';
 import {surfaces} from './surfaces';
 
 export const TRACKS = [
@@ -85,18 +86,14 @@ export function buildTrack(index: number): TrackWorld {
 
   if(index===0) {
     const trunks=new THREE.InstancedMesh(new THREE.CylinderGeometry(.22,.38,3,6),material('#544c3e'),260);
-    const foliage=new THREE.InstancedMesh(new THREE.ConeGeometry(2.6,9,7),material('#214c3c'),260);
+    const treeGeometry=new THREE.ConeGeometry(2.2,5,10);const foliage=new THREE.InstancedMesh(treeGeometry,material('#294c38'),780);
     let count=0;
     for(let attempt=0;attempt<3000&&count<260;attempt++) {
       const x=(rng()-.5)*420,z=(rng()-.5)*380;if(!away(x,z,15))continue;
-      const s=.65+rng()*.8;dummy.rotation.set(0,rng()*Math.PI,0);dummy.scale.set(s,s,s);dummy.position.set(x,1.4*s,z);dummy.updateMatrix();trunks.setMatrixAt(count,dummy.matrix);dummy.position.y=5.6*s;dummy.updateMatrix();foliage.setMatrixAt(count++,dummy.matrix);
+      const s=.65+rng()*.8;dummy.rotation.set(0,rng()*Math.PI,0);dummy.scale.set(s,s,s);dummy.position.set(x,1.4*s,z);dummy.updateMatrix();trunks.setMatrixAt(count,dummy.matrix);for(let tier=0;tier<3;tier++){const taper=1-tier*.22;dummy.scale.set(s*taper,s*taper,s*taper);dummy.position.y=(3.5+tier*2)*s;dummy.updateMatrix();foliage.setMatrixAt(count*3+tier,dummy.matrix)}count++;
     }
-    trunks.count=count;foliage.count=count;trunks.castShadow=true;foliage.castShadow=true;group.add(trunks,foliage);
-    for(let i=0;i<24;i++) {
-      const angle=i/24*Math.PI*2,radius=260+rng()*100,h=50+rng()*110;
-      const m=mesh(new THREE.ConeGeometry(55+rng()*45,h,5),material(i%2?'#6f7d78':'#87928b'),Math.sin(angle)*radius,h/2-9,Math.cos(angle)*radius,group);m.rotation.y=rng()*3;
-      if(i%3===0)mesh(new THREE.ConeGeometry(20,h*.35,5),material('#d6ded8'),m.position.x,h*.82-9,m.position.z,group);
-    }
+    trunks.count=count;foliage.count=count*3;trunks.castShadow=true;foliage.castShadow=true;group.add(trunks,foliage);
+    addMountainBackdrop(group);
     // Open-sided short mountain gallery, arch ribs ensure clear width for riders.
     const stone=material('#7b8379');
     for(let j=0;j<7;j++) {
@@ -105,10 +102,11 @@ export function buildTrack(index: number): TrackWorld {
       mesh(new THREE.BoxGeometry(15.5,.6,1.1),stone,0,7,0,arch);
     }
   } else if(index===1) {
-    const buildingCount=100,buildings=new THREE.InstancedMesh(new THREE.BoxGeometry(1,1,1),material('#203343',.5,.45),buildingCount);
+    const towers:{x:number;z:number;h:number;w:number}[]=[];
+    const buildingCount=85,buildings=new THREE.InstancedMesh(new THREE.BoxGeometry(1,1,1),material('#203343',.5,.45),buildingCount);
     let count=0;
     for(let attempts=0;attempts<2000&&count<buildingCount;attempts++) {
-      const x=(rng()-.5)*450,z=(rng()-.5)*420;if(!away(x,z,24))continue;const h=12+rng()*64,w=8+rng()*12;
+      const angle=rng()*Math.PI*2,radius=350+rng()*300;const x=Math.cos(angle)*radius,z=Math.sin(angle)*radius;if(!away(x,z,35))continue;const h=30+rng()*135,w=12+rng()*18;towers.push({x,z,h,w});
       dummy.position.set(x,h/2,z);dummy.scale.set(w,h,w);dummy.rotation.set(0,0,0);dummy.updateMatrix();buildings.setMatrixAt(count++,dummy.matrix);
       if(count%3===0) {
         const neon=new THREE.MeshStandardMaterial({color:count%2?'#fd6599':'#4adee5',emissive:count%2?'#fd2879':'#14cadf',emissiveIntensity:1.9});
@@ -116,11 +114,12 @@ export function buildTrack(index: number): TrackWorld {
         for(let k=0;k<3;k++)mesh(new THREE.BoxGeometry(.25,h*.7,.25),neon,x-w*.35+k*w*.35,h*.45,z-w/2-.12,group);
       }
     }
-    buildings.count=count;buildings.castShadow=true;group.add(buildings);
-    const water=mesh(new THREE.PlaneGeometry(650,100),new THREE.MeshStandardMaterial({color:'#0d3444',roughness:.16,metalness:.65}),0,-.03,270,group);water.rotation.x=-Math.PI/2;
+    buildings.count=count;buildings.castShadow=true;group.add(buildings);addCityWindows(group,towers);
+    const water=mesh(new THREE.PlaneGeometry(1500,380),new THREE.MeshStandardMaterial({color:'#0d3444',roughness:.16,metalness:.65}),0,-.03,670,group);water.rotation.x=-Math.PI/2;
     const lampGeo=new THREE.CylinderGeometry(.12,.18,7,6),lampMat=material('#688496',.4,.7),glowMat=new THREE.MeshStandardMaterial({color:'#b7e6ee',emissive:'#9cdeff',emissiveIntensity:3});
-    for(let i=0;i<28;i++) {const p=curve.getPointAt(i/28),t=curve.getTangentAt(i/28);const x=p.x+t.z*11,z=p.z-t.x*11;mesh(lampGeo,lampMat,x,3.5,z,group);mesh(new THREE.BoxGeometry(1.8,.13,.6),glowMat,x,7,z,group);}
+    for(let i=0;i<28;i++) {const p=curve.getPointAt(i/28),t=curve.getTangentAt(i/28);const x=p.x+t.z*11,z=p.z-t.x*11;mesh(lampGeo,lampMat,x,3.5,z,group);mesh(new THREE.BoxGeometry(1.8,.13,.6),glowMat,x,7,z,group);if(i%4===0){const lamp=new THREE.PointLight('#b6d7ff',1100,45,2);lamp.position.set(x,6.8,z);group.add(lamp)}}
   } else {
+    addMountainBackdrop(group,true);
     const standMat=material('#b4b5ad'),seatMat=material('#536b80'),roofMat=material('#e3ded2',.5,.25);
     for(let s=0;s<7;s++) {
       const t=.05+s*.12,p=curve.getPointAt(t),tangent=curve.getTangentAt(t),n=new THREE.Vector3(tangent.z,0,-tangent.x);

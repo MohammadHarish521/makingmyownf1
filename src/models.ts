@@ -30,7 +30,7 @@ function tyreLabel():THREE.CanvasTexture{
 }
 let tyreMap:THREE.Texture|undefined;
 export function createBike(index:number,raceLod=false):THREE.Group{
- const root=new THREE.Group();const wheels:THREE.Object3D[]=[],front:THREE.Group[]=[];
+ const root=new THREE.Group();const wheels:THREE.Object3D[]=[],front:THREE.Group[]=[],pivots:THREE.Group[]=[];
  const materialMap=new Map<THREE.Material,THREE.Material>();
  for(const source of templates[raceLod?1:0].children as THREE.Mesh[]){
   const original=source.material as THREE.MeshStandardMaterial;let material=materialMap.get(original);
@@ -46,7 +46,7 @@ export function createBike(index:number,raceLod=false):THREE.Group{
   const part=new THREE.Mesh(source.geometry.clone(),material);part.name=source.name;part.castShadow=true;part.receiveShadow=true;
   if(source.name.includes('wheel')){
    const center=new THREE.Box3().setFromObject(part).getCenter(new THREE.Vector3());part.geometry.translate(-center.x,-center.y,-center.z);
-   const pivot=new THREE.Group();pivot.position.copy(center);root.add(pivot);const spin=new THREE.Group();pivot.add(spin);spin.add(part);wheels.push(spin);
+   const pivot=new THREE.Group();pivot.position.copy(center);root.add(pivot);pivots.push(pivot);const spin=new THREE.Group();pivot.add(spin);spin.add(part);wheels.push(spin);
    if(source.name.includes('front'))front.push(pivot);
    // Sidewall lettering is a transparent local decal; the tyre and rim remain the imported mesh.
    if(!tyreMap)tyreMap=tyreLabel();const side=Math.sign(center.x);
@@ -62,5 +62,5 @@ export function createBike(index:number,raceLod=false):THREE.Group{
   ctx.fillRect(105,300,46,212);const map=new THREE.CanvasTexture(c);map.colorSpace=THREE.SRGBColorSpace;
   nose.updateMatrixWorld(true);const decal=new THREE.Mesh(new DecalGeometry(nose,new THREE.Vector3(0,.37,1.4),new THREE.Euler(-Math.PI/2,0,0),new THREE.Vector3(.22,.65,.8)),new THREE.MeshStandardMaterial({map,transparent:true,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-4,roughness:.4}));root.add(decal);
  }
- root.userData.wheels=wheels;root.userData.frontWheels=front;root.userData.name=BIKES[index].name;return root;
+ root.userData.wheels=wheels;root.userData.frontWheels=front;root.userData.wheelPivots=pivots;root.userData.name=BIKES[index].name;return root;
 }

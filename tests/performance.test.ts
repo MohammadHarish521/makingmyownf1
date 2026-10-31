@@ -1,0 +1,5 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {AdaptiveGraphics} from '../src/performance';
+Object.assign(globalThis,{devicePixelRatio:1,document:{hidden:false}});
+function fixture(){const renderer={setPixelRatio:(_ratio:number)=>{}};const shadow={map:null,mapSize:{x:2048,set(x:number,_y:number){this.x=x}},needsUpdate:false};return {graphics:new AdaptiveGraphics(renderer as any,{shadow} as any),shadow}}
+test('Auto reduces render load for sustained slow frames while reporting low FPS honestly',()=>{const {graphics,shadow}=fixture();for(let i=0;i<10;i++)graphics.update(1);assert(graphics.fps<10);assert(graphics.pixelRatio<1);assert(graphics.pixelRatio>=.65);assert.equal(shadow.mapSize.x,512)});
+test('manual graphics presets remain selected during slow frames',()=>{const {graphics}=fixture();graphics.setPreset('high');const ratio=graphics.pixelRatio;for(let i=0;i<100;i++)graphics.update(.1);assert.equal(graphics.pixelRatio,ratio);assert.equal(graphics.preset,'high');graphics.setPreset('performance');assert(graphics.pixelRatio<=.8)});

@@ -1,0 +1,13 @@
+{
+  "viewport": [
+    960,
+    600
+  ],
+  "preset": "performance",
+  "pixelRatio": 0.8,
+  "frameCount": 4,
+  "elapsedMs": 3090.0999999996275,
+  "averageFps": 1.2944564900813833,
+  "medianFrameMs": 1116.5999999999985,
+  "renderer": "Chromium SwiftShader (software rendering); not representative of hardware GPU performance."
+}

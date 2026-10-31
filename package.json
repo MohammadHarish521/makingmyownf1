@@ -10,13 +10,14 @@
     "test": "node --import tsx --test tests/*.test.ts"
   },
   "dependencies": {
+    "cannon-es": "^0.20.0",
     "three": "^0.180.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.56.1",
     "@types/three": "^0.180.0",
-    "typescript": "^5.9.3",
-    "vite": "^7.1.12",
     "tsx": "^4.20.6",
-    "@playwright/test": "^1.56.1"
+    "typescript": "^5.9.3",
+    "vite": "^7.1.12"
   }
 }
