@@ -21,3 +21,5 @@
 #world{touch-action:none;cursor:grab}#world:active{cursor:grabbing}.view-settings #world{cursor:default}
 
 #fps-counter{position:fixed;right:14px;bottom:12px;z-index:50;pointer-events:none;padding:5px 8px;background:#080b10df;color:#bde8cd;font:600 11px Barlow,Arial,sans-serif;letter-spacing:.5px}.settings-panel #graphics{max-width:68%}
+
+.transmission-mode{display:inline-block;font-size:8px;letter-spacing:1px;color:#e5e9f0;margin-left:9px;border-left:1px solid #ffffff35;padding-left:9px}

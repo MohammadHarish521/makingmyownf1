@@ -84,3 +84,14 @@ UI fonts are now locally bundled Barlow and Rajdhani (SIL OFL). Charcoal surface
 racing-red actions, larger labels, upright telemetry and clearer selected/focus
 states replace the old generic italic styling. Font licenses are in public/fonts;
 cannon-es's MIT license is in public/licenses.
+
+## Image horizon and bumper shifting
+
+Daytime tracks now use a bundled Alpine panorama; Neon Harbor uses an original
+night harbor panorama. Scene backgrounds sit at infinity and retain foreground
+3D scenery. One low foothill ring replaces the three tall mountain rings.
+SCENERY-RESEARCH.md records the reference, evidence limits and implementation.
+
+LB downshifts and RB upshifts, once per press. The first gear-button press selects
+manual mode; Q/E behave the same way. The HUD shows AUTO or MANUAL. Both bumpers
+together are neutral and input while paused is consumed without changing gear.

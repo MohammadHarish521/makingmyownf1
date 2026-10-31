@@ -1,6 +1,17 @@
 import type {Controls} from './simulation';
 export type DrivingPad=Pick<Gamepad,'connected'|'axes'|'buttons'>;
 const clamp=(value:number)=>Number.isFinite(value)?Math.max(-1,Math.min(1,value)):0;
+/** Standard gamepad bumpers: LB (4) down, RB (5) up. Held buttons never repeat. */
+export class GamepadGearShifter {
+ private down=false;private up=false;
+ sample(pads:readonly (DrivingPad|null)[]): -1|0|1 {
+  const pad=pads.find(p=>p?.connected);
+  const pressed=(index:number)=>!!pad?.buttons[index]?.pressed||(pad?.buttons[index]?.value??0)>.5;
+  const down=pressed(4),up=pressed(5);
+  const shift=down&&up?0:up&&!this.up?1:down&&!this.down?-1:0;
+  this.down=down;this.up=up;return shift;
+ }
+}
 export function readDrivingControls(keys:ReadonlySet<string>,pads:readonly (DrivingPad|null)[]):Controls {
  const pad=pads.find(p=>p?.connected);
  const axis=clamp(pad?.axes[0]??0);

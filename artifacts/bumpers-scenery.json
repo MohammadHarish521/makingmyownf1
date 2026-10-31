@@ -1,0 +1,19 @@
+{
+  "errors": [],
+  "checks": [
+    "RB upshift and LB downshift",
+    "one shift per bumper press",
+    "both bumpers neutral",
+    "gears clamped 1–8",
+    "first shift selects manual and holds under acceleration",
+    "keyboard Q/E",
+    "paused input does not shift on resume",
+    "connected controller in second slot",
+    "day/night panoramic backgrounds on all three tracks",
+    "foreground foothills",
+    "headlights",
+    "garage restores background",
+    "mobile overflow"
+  ],
+  "method": "Synthetic standard Gamepad API with real Cannon physics and normal keyboard/mouse input; explicit render frames accommodate software rendering. No target-device FPS claim."
+}

@@ -111,3 +111,15 @@ directions, deadzone, non-finite axis input, keyboard/touch priority, neutral
 release and a connected controller after an empty slot. Browser verification uses
 a synthetic standard Gamepad API plus normal keyboard and touch-button input;
 physical hardware testing remains device-specific.
+
+## Bumpers and image scenery
+
+Production build and all five test files pass. New bumper regressions verify
+press/release behavior, no held-repeat, simultaneous input and disconnected pads.
+Browser verification passes RB upshift, LB downshift, gears 1–8, manual takeover,
+retained gear under acceleration, Q/E, pause/resume without a phantom shift, and
+a controller in slot 2. All three tracks load their image panoramas; day foothills,
+night headlights, garage return and mobile overflow were checked. Captures are in
+artifacts/scenery-* and results in artifacts/bumpers-scenery.json. The Gamepad API
+is synthetic and render frames are advanced explicitly for software rendering;
+these checks do not establish physical-device compatibility or target GPU FPS.
