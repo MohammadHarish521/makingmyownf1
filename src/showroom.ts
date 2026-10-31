@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 /** A restrained studio gives the bodywork visible highlights and ground contact. */
 export function decorateGarage(group:THREE.Group){
- const floor=new THREE.Mesh(new THREE.PlaneGeometry(120,120),new THREE.MeshStandardMaterial({color:'#0b1018',metalness:.05,roughness:.62}));floor.rotation.x=-Math.PI/2;floor.position.y=.015;floor.receiveShadow=true;group.add(floor);
+ const floor=new THREE.Mesh(new THREE.PlaneGeometry(120,120),new THREE.MeshPhysicalMaterial({color:'#080b11',metalness:.35,roughness:.28,clearcoat:.4,clearcoatRoughness:.25}));floor.rotation.x=-Math.PI/2;floor.position.y=.015;floor.receiveShadow=true;group.add(floor);
  const wall=new THREE.Mesh(new THREE.CylinderGeometry(22,22,13,80,1,true),new THREE.MeshStandardMaterial({color:'#161b25',side:THREE.BackSide,roughness:.85}));wall.position.y=6;group.add(wall);
  const grid=new THREE.GridHelper(60,30,'#444954','#373c46');grid.position.y=.018;(grid.material as THREE.Material).transparent=true;(grid.material as THREE.Material).opacity=.22;group.add(grid);
  const lightMat=new THREE.MeshBasicMaterial({color:'#ecf4ff'});

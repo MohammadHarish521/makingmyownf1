@@ -23,3 +23,15 @@
 #fps-counter{position:fixed;right:14px;bottom:12px;z-index:50;pointer-events:none;padding:5px 8px;background:#080b10df;color:#bde8cd;font:600 11px Barlow,Arial,sans-serif;letter-spacing:.5px}.settings-panel #graphics{max-width:68%}
 
 .transmission-mode{display:inline-block;font-size:8px;letter-spacing:1px;color:#e5e9f0;margin-left:9px;border-left:1px solid #ffffff35;padding-left:9px}
+
+.broadcast .leaderboard{position:absolute;left:3%;top:118px;margin:0;padding:10px 12px;list-style:none;width:min(280px,34vw);background:#0d1016d6;border:1px solid #ffffff22;border-left:3px solid var(--red);font:600 12px Barlow,Arial,sans-serif}
+.broadcast .leaderboard li{display:grid;grid-template-columns:36px 1fr auto;gap:8px;align-items:center;padding:4px 0;border-bottom:1px solid #ffffff12;color:#e8edf4}
+.broadcast .leaderboard li:last-child{border-bottom:0}
+.broadcast .leaderboard b{color:#ff6b63;font-family:var(--display)}
+.broadcast .leaderboard i{font-style:normal;color:#b7c0cc;font-variant-numeric:tabular-nums}
+.broadcast .leaderboard .you{color:#fff;background:#e1060022;margin:0 -8px;padding:4px 8px}
+.broadcast .session-chips{display:flex;flex-direction:column;gap:6px;margin-left:auto}
+.broadcast .session-chips span{background:#0d1016d8;border:1px solid #ffffff24;padding:6px 10px;font:700 11px Rajdhani,Arial,sans-serif;letter-spacing:1.2px}
+.broadcast .race-timing{display:flex;gap:18px}
+@media(max-width:900px){.broadcast .leaderboard{width:200px;top:102px;padding:8px}.broadcast .leaderboard span{display:none}}
+@media(max-width:650px){.broadcast .leaderboard,.broadcast .session-chips{display:none}}

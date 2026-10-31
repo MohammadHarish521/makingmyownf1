@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {addMountainBackdrop,addCityWindows} from './scenery';
 import {surfaces} from './surfaces';
+import {dressVenue} from './venue';
 
 export const TRACKS = [
   { name: 'Alpine Pass', subtitle: 'Mountain circuit · Dry tarmac' },
@@ -37,7 +38,8 @@ export function buildTrack(index: number): TrackWorld {
   curve.arcLengthDivisions = 1600; curve.updateArcLengths();
   const length = curve.getLength(), width = 12, segments = 640;
   const roadMat = material(index===1 ? '#172530' : '#323c43', index===1 ? .26 : .93, index===1 ? .35 : .02);
-  if(surfaces.asphalt){roadMat.map=surfaces.asphalt;roadMat.color.set(index===1?'#626a78':'#a1a5ab');roadMat.bumpMap=surfaces.asphalt;roadMat.bumpScale=.015;}
+  roadMat.userData.surface='asphalt';
+  if(surfaces.asphalt){roadMat.map=surfaces.asphalt;roadMat.color.set(index===1?'#626a78':'#8d9198');roadMat.bumpMap=surfaces.asphalt;roadMat.bumpScale=.028;roadMat.roughness=index===1?.22:.88;roadMat.envMapIntensity=index===1?.9:.35;}
   const shoulderMat = material(index===0 ? '#80816d' : '#59616a');
   const white = material('#e1ded1'), red = material(index===1?'#23d9de':'#e10600');
   function ribbon(inner: number, outer: number, mat: THREE.Material, y = .014) {
@@ -133,5 +135,6 @@ export function buildTrack(index: number): TrackWorld {
     for(let i=0;i<35;i++){const x=(rng()-.5)*290,z=(rng()-.5)*250;if(!away(x,z,17))continue;mesh(new THREE.CylinderGeometry(.25,.4,8,7),material('#7b7051'),x,4,z,group);const crown=mesh(new THREE.SphereGeometry(3.5,7,5),material('#425d43'),x,8,z,group);crown.scale.y=.35;}
   }
   group.traverse(object=>{if(object instanceof THREE.Mesh && !(object instanceof THREE.InstancedMesh))object.receiveShadow=true;});
+  dressVenue(group,curve,length,width,index);
   return {group,curve,length,width,spawn:start.clone()};
 }

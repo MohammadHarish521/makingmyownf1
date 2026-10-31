@@ -20,7 +20,7 @@ export function createEnvironments(renderer:THREE.WebGLRenderer){
  const pmrem=new THREE.PMREMGenerator(renderer);
  const studioRoom=new RoomEnvironment();const studio=pmrem.fromScene(studioRoom,.035).texture;studioRoom.dispose();
  const sky=new Sky();sky.scale.setScalar(10000);
- const u=sky.material.uniforms;u.turbidity.value=2.2;u.rayleigh.value=2;u.mieCoefficient.value=.004;u.mieDirectionalG.value=.8;u.sunPosition.value.set(80,95,35);
+ const u=sky.material.uniforms;u.turbidity.value=1.8;u.rayleigh.value=2.6;u.mieCoefficient.value=.0035;u.mieDirectionalG.value=.85;u.sunPosition.value.set(90,110,40);
  const skyScene=new THREE.Scene();skyScene.add(sky);
  const daylight=pmrem.fromScene(skyScene,.025,.1,20000).texture;skyScene.remove(sky);sky.scale.setScalar(1000);
  const nightSky=createNightSky();const nightScene=new THREE.Scene();nightScene.add(nightSky);const night=pmrem.fromScene(nightScene,.04,.1,2000).texture;nightScene.remove(nightSky);pmrem.dispose();
